@@ -4,21 +4,23 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use App\Repository\UserRepositoryInterface;
 
 class LoginController extends Controller
 {
+
+    private $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function login(LoginRequest $request)
     {
-        $user = User::where('email',$request->email)
-        ->first();
-        if(Hash::check($request->password, $user->password ?? null))
+        if($user = $this->userRepository->checkPassword($request->email,$request->password))
         {
-            $user->api_token = Str::random(60);
-            $user->save();
+            $user = $this->userRepository->updateToken($user);
             return response()->json(['data' => $user,'errors' => []],200);
         }
         else
