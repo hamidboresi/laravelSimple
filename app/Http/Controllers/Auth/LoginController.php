@@ -1,23 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-class AuthController extends Controller
+
+class LoginController extends Controller
 {
-
-    public function register(RegisterRequest $request)
-    {
-        $user = User::create($request->all());
-        return response()->json(['data' => $user,'errors' => []],200);
-    }
-
     public function login(LoginRequest $request)
     {
         $user = User::where('email',$request->email)
@@ -32,12 +25,5 @@ class AuthController extends Controller
         {
             return response()->json(['data' => [],'errors' => ['email' => ['ایمیل یا پسورد اشتباه است']]],401);
         }
-    }
-
-    public function logout(Request $request)
-    {
-        $user = User::where('api_token',$request->header('api_token'))
-        ->update(['api_token' => NULL]);
-        return response()->json(['data' =>[],'errors' => []]);
     }
 }
