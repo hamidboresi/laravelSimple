@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -10,35 +12,14 @@ use Illuminate\Support\Str;
 class AuthController extends Controller
 {
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:10',
-            'hamid' => 'required',
-            'email' => 'required|unique:users,email|email',
-            'password' => 'required|confirmed|min:8'
-        ]);
-
-        if ($validator->fails()) {
-            $messages = $validator->errors()->messages();
-            return response()->json(['data' => [],'errors' => $messages],422);
-        }
         $user = User::create($request->all());
-
         return response()->json(['data' => $user,'errors' => []],200);
-
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required',
-            'password' => 'required'
-        ]);
-        if ($validator->fails()) {
-            $messages = $validator->errors()->messages();
-            return response()->json(['data' => [],'errors' => $messages],422);
-        }
         $user = User::where('email',$request->email)
         ->first();
         if(Hash::check($request->password, $user->password ?? null))
