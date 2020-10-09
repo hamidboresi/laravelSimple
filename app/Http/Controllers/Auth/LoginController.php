@@ -4,23 +4,23 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Repository\UserRepositoryInterface;
+use App\Repositories\Interfaces\Auth\LoginRepositoryInterface;
 
 class LoginController extends Controller
 {
 
-    private $userRepository;
+    private $loginRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(LoginRepositoryInterface $loginRepository)
     {
-        $this->userRepository = $userRepository;
+        $this->loginRepository = $loginRepository;
     }
 
     public function login(LoginRequest $request)
     {
-        if($user = $this->userRepository->checkPassword($request->email,$request->password))
+        if($user = $this->loginRepository->checkPassword($request->email,$request->password))
         {
-            $user = $this->userRepository->updateToken($user);
+            $user = $this->loginRepository->updateToken($user);
             return response()->json(['data' => $user,'errors' => []],200);
         }
         else

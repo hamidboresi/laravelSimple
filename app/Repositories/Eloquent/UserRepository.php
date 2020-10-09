@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Repository\Eloquent;
+namespace App\Repositories\Eloquent;
 
 use App\Models\User;
-use App\Repository\UserRepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
-    public function __construct(User $model)
+    public function __construct()
     {
-        parent::__construct($model);
+        parent::__construct(new User());
     }
 
     public function checkPassword($email,$password)

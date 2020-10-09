@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Repository\UserRepositoryInterface;
+use App\Repositories\Interfaces\Auth\LogoutRepositoryInterface;
 use Illuminate\Http\Request;
 
 class LogoutController extends Controller
 {
-    private  $userRepository;
+    private  $logoutRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(LogoutRepositoryInterface $logoutRepository)
     {
-        $this->userRepository = $userRepository;
+        $this->logoutRepository = $logoutRepository;
     }
     public function logout(Request $request)
     {
-        $this->userRepository->removeToken($request);
+        $this->logoutRepository->removeToken($request);
         return response()->json(['data' =>[],'errors' => []]);
     }
 }
