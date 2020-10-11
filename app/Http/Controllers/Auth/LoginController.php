@@ -4,28 +4,20 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Repositories\Interfaces\Auth\LoginRepositoryInterface;
+use App\Services\Auth\LoginService;
 
 class LoginController extends Controller
 {
 
-    private $loginRepository;
+    private $loginService;
 
-    public function __construct(LoginRepositoryInterface $loginRepository)
+    public function __construct(LoginService $loginService)
     {
-        $this->loginRepository = $loginRepository;
+        $this->loginService = $loginService;
     }
 
     public function login(LoginRequest $request)
     {
-        if($user = $this->loginRepository->checkPassword($request->email,$request->password))
-        {
-            $user = $this->loginRepository->updateToken($user);
-            return response()->json(['data' => $user,'errors' => []],200);
-        }
-        else
-        {
-            return response()->json(['data' => [],'errors' => ['email' => ['ایمیل یا پسورد اشتباه است']]],401);
-        }
+        return $this->loginService->login($request);
     }
 }

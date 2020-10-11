@@ -17,8 +17,7 @@ class LogoutRepository extends UserRepository implements LogoutRepositoryInterfa
 
     public function removeToken($request) : Bool
     {
-        $api_token = substr($request->header('authorization'),7,strlen($request->header('authorization'))-7);
-        $userId = $this->model->where('api_token',$api_token)->first()->id;
+        $userId = $this->model->where('api_token',$request->bearerToken())->first()->id;
         return $this->update(['api_token' => NULL],$userId);
     }
 }
