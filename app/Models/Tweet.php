@@ -19,4 +19,10 @@ class Tweet extends Model
     {
         return $this->beLongsTo(User::class);
     }
+
+    public function likes()
+    {
+        return $this->belongsToMany(User::class,'likes','tweet_id','user_id')
+        ->whereNull('likes.deleted_at');
+    }
 }

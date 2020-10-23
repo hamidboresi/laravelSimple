@@ -70,5 +70,10 @@ class User extends Authenticatable
         return $this->hasMany(Tweet::class);
     }
 
+    public function likedPosts()
+    {
+        return $this->belongsToMany(Tweet::class,'likes','user_id','tweet_id')
+        ->whereNull('likes.deleted_at');
+    }
 
 }

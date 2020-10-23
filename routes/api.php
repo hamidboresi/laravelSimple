@@ -23,6 +23,9 @@ Route::namespace('App\Http\Controllers')->group(function(){
            Route::post('submit','TweetController@submit');
            Route::post('delete/{id}','TweetController@delete');
            Route::get('list','TweetController@list');
+           Route::get('likes','LikeController@likes');
+           Route::post('like','LikeController@like');
+           Route::post('unLike','LikeController@unLick');
        });
        Route::get('wall','WallController@wall');
     });

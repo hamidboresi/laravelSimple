@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TweetRequest;
+use App\Http\Requests\CreateTweetRequest;
 use App\Models\Tweet;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class TweetController extends Controller
 {
-    public function submit(TweetRequest $request)
+    public function submit(CreateTweetRequest $request)
     {
         $user = User::where('api_token',$request->bearerToken())->first();
         $user->tweets()->create($request->all());

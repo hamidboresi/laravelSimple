@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Http\JsonResponse;
 
-class TweetRequest extends FormRequest
+class CreateTweetRequest extends FormRequest
 {
      /**
      * Determine if the user is authorized to make this request.
