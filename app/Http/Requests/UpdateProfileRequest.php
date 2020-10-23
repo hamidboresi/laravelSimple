@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Http\JsonResponse;
 
-class RegisterRequest extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,19 +18,13 @@ class RegisterRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
             'fullName' => 'required|max:20',
             // 'email' => 'required|unique:users,email|email',
             'phone' => 'sometimes|required|unique:users,phone|digits:11',
-            'username' => 'sometimes|required|unique:users,username|min:3|max:40',
-            'password' => 'required|confirmed|min:8',
+            'username' => 'sometimes|required|unique:users,username|min:3|max:40'
         ];
     }
 
@@ -39,8 +33,7 @@ class RegisterRequest extends FormRequest
         return [
             'fullName' => 'نام کامل',
             'phone' => 'موبایل',
-            'username' => 'نام کاربری',
-            'password' => 'پسورد',
+            'username' => 'نام کاربری'
         ];
     }
 

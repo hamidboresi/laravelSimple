@@ -16,9 +16,9 @@ class LoginRepository extends UserRepository implements LoginRepositoryInterface
         parent::__construct();
     }
 
-    public function checkPassword($email,$password)
+    public function checkPassword($phone,$password)
     {
-        $user = $this->model->where('email',$email)->first();
+        $user = $this->model->where('phone',$phone)->first();
         if(Hash::check($password, $user->password ?? null))
         return $user;
         else

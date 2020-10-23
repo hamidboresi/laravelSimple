@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required',
+            'phone' => 'required',
             'password' => 'required'
         ];
     }
@@ -35,7 +35,7 @@ class LoginRequest extends FormRequest
     public function attributes()
     {
         return [
-            'email' => 'ایمیل',
+            'phone' => 'موبایل',
             'password' => 'پسورد',
         ];
     }
@@ -43,7 +43,7 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => 'فیلد :attribute ضرروی است',
+            'required' => ':attribute ضرروی است',
         ];
     }
 

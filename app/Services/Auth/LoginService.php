@@ -16,13 +16,13 @@ class LoginService extends ResponseTemplate{
 
     public function login(Request $request)
     {
-        if($user = $this->loginRepository->checkPassword($request->email,$request->password))
+        if($user = $this->loginRepository->checkPassword($request->phone,$request->password))
         {
             $this->setData($this->loginRepository->updateToken($user));
         }
         else
         {
-            $this->setErrors(['email' => ['ایمیل یا پسورد اشتباه است']]);
+            $this->setErrors(['email' => ['موبایل یا پسورد اشتباه است']]);
             $this->setStatus(401);
         }
 

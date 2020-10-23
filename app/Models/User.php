@@ -19,8 +19,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
+        'fullName',
+        'username',
+        'phone',
         'password',
         'api_token'
     ];
@@ -33,7 +34,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'email_verified_at'
+        // 'email_verified_at'
     ];
 
     protected $appends = ['avatar'];
@@ -44,7 +45,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        // 'email_verified_at' => 'datetime',
     ];
 
     protected static function boot(){
@@ -62,6 +63,11 @@ class User extends Authenticatable
     public function getAvatarAttribute()
     {
         return asset('/images/avatar/default.jpg');
+    }
+
+    public function tweets()
+    {
+        return $this->hasMany(Tweet::class);
     }
 
 

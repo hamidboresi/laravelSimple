@@ -13,12 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::namespace('App\Http\Controllers')->group(function(){
-    Route::post('register','Auth\RegisterController@register');
-    Route::post('login','Auth\LoginController@login');
+    Route::post('auth/register','Auth\RegisterController@register');
+    Route::post('auth/login','Auth\LoginController@login');
     Route::middleware('auth:api')->group(function(){
-       Route::post('logout','Auth\LogoutController@logout');
-       Route::get('getProfile','UserController@getProfile');
-});
+       Route::post('auth/logout','Auth\LogoutController@logout');
+       Route::get('profile/get','UserController@getProfile');
+       Route::post('profile/update','UserController@updateProfile');
+       Route::group(['prefix' => 'tweet'],function(){
+           Route::post('submit','TweetController@submit');
+           Route::post('delete/{id}','TweetController@delete');
+           Route::get('list','TweetController@list');
+       });
+       Route::get('wall','WallController@wall');
+    });
+
 });
 
 
