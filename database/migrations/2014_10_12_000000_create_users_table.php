@@ -19,12 +19,16 @@ class CreateUsersTable extends Migration
             // $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->string('username')->unique();
+            $table->bigInteger('following')->default(0);
+            $table->bigInteger('followers')->default(0);
             // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->bigInteger('tweets')->default(0);
             $table->string('api_token', 80)
                         ->unique()
                         ->nullable()
                         ->default(null);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

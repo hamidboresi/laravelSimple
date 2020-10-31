@@ -2,21 +2,24 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Tweet;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Http\JsonResponse;
-class LikeRequest extends FormRequest
+use Illuminate\Http\Request;
+
+class FollowRequest extends FormRequest
 {
      /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
+
     public function authorize()
     {
-        $tweet = Tweet::findOrFail($this->route()->parameter('id'));
-        return true;
+        $user = User::findOrFail($this->route()->parameter('id'));
+        return auth('api')->user()->id != $user->id;
     }
 
     /**
@@ -40,9 +43,9 @@ class LikeRequest extends FormRequest
 
     public function messages()
     {
-       return [
-
-       ];
+        return [
+            'required' => ':attribute ضرروی است',
+        ];
     }
 
     protected function failedValidation(ValidationValidator $validator)

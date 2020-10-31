@@ -15,8 +15,26 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
+        'App\Events\Followed' => [
+            'App\Listeners\IncreaseFollowersAndFollowing',
+        ],
+        'App\Events\UnFollowed' => [
+            'App\Listeners\DecreaseFollowersAndFollowing'
+        ],
+        'App\Events\Liked' => [
+            'App\Listeners\IncreaseTweetLikes',
+        ],
+        'App\Events\UnLiked' => [
+            'App\Listeners\DecreaseTweetLikes',
+        ],
+        'App\Events\Commented' => [
+            'App\Listeners\IncreaseTweetComments',
+        ],
+        'App\Events\TweetCreated' => [
+            'App\Listeners\IncreaseUserTweets',
+        ],
+        'App\Events\TweetDeleted' => [
+            'App\Listeners\DecreaseUserTweets',
         ],
     ];
 

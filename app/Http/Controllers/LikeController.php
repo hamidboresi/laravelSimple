@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Liked;
+use App\Events\UnLiked;
 use App\Http\Requests\LikeRequest;
 use App\Models\Tweet;
 use App\Models\User;
@@ -10,28 +12,25 @@ use Illuminate\Support\Facades\DB;
 
 class LikeController extends Controller
 {
-    public function like(LikeRequest $request)
+    public function like(LikeRequest $request,$id)
     {
         $user = auth('api')->user();
-        $user->likedPosts()->attach($request->tweet_id);
+        if($user->likedPosts->contains($id))
+        {
+            $user->unLike($id);
+            event(new UnLiked($rid));
+        }
+        else
+        {
+            $user->likedPosts()->attach($id);
+            event(new Liked($id));
+        }
         return response()->json(['data' => [],'errors' =>[]],200);
     }
 
-    public function unLick(LikeRequest $request)
+    public function likes(LikeRequest $request,$id)
     {
-        $user = auth('api')->user();
-        DB::table('likes')->where('user_id' , $user->id)
-        ->where('tweet_id' , $request->tweet_id)
-        ->update([
-            'deleted_at' => DB::raw('NOW()'),
-            'updated_at' => DB::raw('NOW()'),
-            ]);
-        return response()->json(['data' => [],'errors' =>[]],200);
-    }
-
-    public function likes(LikeRequest $request)
-    {
-        $tweet = Tweet::find($request->tweet_id);
+        $tweet = Tweet::find($id);
         $likes = $tweet->likes()->get();
         return response()->json(['data' => $likes,'errors' =>[]],200);
     }

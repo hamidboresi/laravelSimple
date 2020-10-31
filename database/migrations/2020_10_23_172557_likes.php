@@ -20,7 +20,7 @@ class Likes extends Migration
             $table->bigInteger('tweet_id')->unsigned();
             $table->foreign('tweet_id')->references('id')->on('tweets')->onDelete('cascade');
             $table->softDeletes();
-            $table->timestamps();
+            $table->timestamp('liked_at')->useCurrent();
         });
     }
 

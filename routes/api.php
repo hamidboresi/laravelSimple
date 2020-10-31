@@ -23,9 +23,16 @@ Route::namespace('App\Http\Controllers')->group(function(){
            Route::post('submit','TweetController@submit');
            Route::post('delete/{id}','TweetController@delete');
            Route::get('list','TweetController@list');
-           Route::get('likes','LikeController@likes');
-           Route::post('like','LikeController@like');
-           Route::post('unLike','LikeController@unLick');
+           Route::get('specific/{id}','TweetController@specific');
+           Route::get('likes/{id}','LikeController@likes');
+           Route::post('like/{id}','LikeController@like');
+       });
+       Route::get('user/info/{id}','UserController@info');
+       Route::group(['prefix' => 'comment'],function(){
+           Route::post('submit/{id}','CommentController@submit');
+       });
+       Route::group([],function () {
+           Route::post('follow/{id}','FollowController@follow');
        });
        Route::get('wall','WallController@wall');
     });

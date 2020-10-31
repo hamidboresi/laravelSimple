@@ -20,4 +20,10 @@ class UserController extends Controller
         $user = User::where('api_token',$request->bearerToken())->first();
         return response()->json(['data' => $user,'errors' => []]);
     }
+
+    public function info(Request $request,$id)
+    {
+        $user = User::select(['id','fullName','username','tweets','followers','following'])->findOrFail($id);
+        return response()->json(['data' => $user,'errors' => []]);
+    }
 }
