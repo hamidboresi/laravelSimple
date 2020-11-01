@@ -3,7 +3,6 @@
 namespace App\Events;
 
 use App\Models\Tweet;
-use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TweetCreated
+class TweetUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -22,7 +21,6 @@ class TweetCreated
      * @return void
      */
     public $tweet,$user;
-
     public function __construct(Tweet $tweet)
     {
         $this->tweet = $tweet;
@@ -34,8 +32,8 @@ class TweetCreated
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-    // public function broadcastOn()
-    // {
-    //     return new PrivateChannel('channel-name');
-    // }
+    public function broadcastOn()
+    {
+        return new PrivateChannel('channel-name');
+    }
 }

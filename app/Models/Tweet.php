@@ -35,6 +35,13 @@ class Tweet extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function hashtags()
+    {
+        return $this->belongsToMany(Hashtag::class)
+           ->whereNull('hashtag_tweet.deleted_at')
+           ->withTimestamps();
+    }
+
     public function getIsLikeAttribute()
     {
         $user = auth('api')->user();

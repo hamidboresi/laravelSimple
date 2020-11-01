@@ -32,9 +32,14 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\TweetCreated' => [
             'App\Listeners\IncreaseUserTweets',
+            'App\Listeners\IncreaseUsageHashtag',
         ],
         'App\Events\TweetDeleted' => [
             'App\Listeners\DecreaseUserTweets',
+            'App\Listeners\DecreaseUsageHashtag',
+        ],
+        'App\Events\TweetUpdated' => [
+            'App\Listeners\UpdateUsageHashtag',
         ],
     ];
 

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::namespace('App\Http\Controllers')->group(function(){
     Route::post('auth/register','Auth\RegisterController@register');
     Route::post('auth/login','Auth\LoginController@login');
@@ -21,6 +22,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
        Route::post('profile/update','UserController@updateProfile');
        Route::group(['prefix' => 'tweet'],function(){
            Route::post('submit','TweetController@submit');
+           Route::post('update/{id}','TweetController@update');
            Route::post('delete/{id}','TweetController@delete');
            Route::get('list','TweetController@list');
            Route::get('specific/{id}','TweetController@specific');
@@ -33,6 +35,10 @@ Route::namespace('App\Http\Controllers')->group(function(){
        });
        Route::group([],function () {
            Route::post('follow/{id}','FollowController@follow');
+       });
+       Route::group(['prefix' => 'hashtag'],function(){
+         Route::get('tweets','HashtagController@tweets');
+         Route::get('trends','HashtagController@trends');
        });
        Route::get('wall','WallController@wall');
     });

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Tweet;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -20,10 +21,11 @@ class TweetDeleted
      *
      * @return void
      */
-    public $user;
+    public $tweet,$user;
 
-    public function __construct()
+    public function __construct(Tweet $tweet)
     {
+        $this->tweet = $tweet;
         $this->user = auth('api')->user();
     }
 

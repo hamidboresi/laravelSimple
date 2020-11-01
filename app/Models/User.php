@@ -73,6 +73,8 @@ class User extends Authenticatable
     public function getIsFollowAttribute()
     {
         $user = auth('api')->user();
+          if(!$user)
+          return false;
         if($user->followings->contains($this->id))
         {
             return true;
@@ -86,6 +88,8 @@ class User extends Authenticatable
     public function getAreYouAttribute()
     {
         $user = auth('api')->user();
+        if(!$user)
+          return true;
         if($user->id == $this->id)
         {
             return true;
