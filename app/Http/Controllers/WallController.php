@@ -9,7 +9,7 @@ class WallController extends Controller
 {
     public function wall()
     {
-         $tweets = Tweet::all();
+           $tweets = Tweet::all();
          return response()->json(['data' => $tweets,'errors' =>[]],200);
     }
 }
